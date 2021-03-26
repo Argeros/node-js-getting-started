@@ -16,6 +16,7 @@
     "express": "^4.15.2"
   },
   "devDependencies": {
+    "@cyclonedx/bom": "^2.0.2",
     "got": "^11.3.0",
     "tape": "^4.7.0"
   },
