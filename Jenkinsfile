@@ -18,11 +18,17 @@ pipeline {
             when { branch "main" }
             steps {
               nodejs(nodeJSInstallationName: "sbom") {
-                sh "cyclonedx-bom"
+                sh "npx cyclonedx-bom -o npm-bom.xml"
               }
               dependencyTrackPublisher artifact: 'npm-bom.xml', projectName: 'getting-started', projectVersion: GIT_COMMIT.take(5), synchronous: false
             }
         }
 
-    }
+      }
+
+      post {
+          always {
+              cleanWs()
+          }
+      }
 }
