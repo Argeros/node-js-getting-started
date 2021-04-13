@@ -20,10 +20,10 @@ pipeline {
               nodejs(nodeJSInstallationName: "sbom") {
                 sh "npx cyclonedx-bom -o npm-bom.xml"
               }
-              def sbom_list = sh returnStdout: true, script: 'find . -iname *bom.xml'
-              sbom_list.each { item ->
-                  sh "echo ${item}"
-              }
+              sbom_list = sh(returnStdout: true, script: 'find . -iname *bom.xml').trim()
+              //sbom_list.each { item ->
+              //    sh "echo ${item}"
+              //}
 
               dependencyTrackPublisher artifact: 'npm-bom.xml', projectName: 'getting-started', projectVersion: GIT_COMMIT.take(5), synchronous: false
             }
