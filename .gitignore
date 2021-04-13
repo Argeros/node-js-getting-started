@@ -12,4 +12,4 @@ Dockerfile
 docker-compose.yml
 
 # Bom
-*bom.xml
+#*bom.xml
