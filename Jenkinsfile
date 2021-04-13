@@ -22,7 +22,10 @@ pipeline {
               }
 
               script {
-                sbom_list = sh(returnStdout: true, script: 'find . -iname *bom.xml').trim()
+                sbom_list = sh(returnStdout: true, script: "find . -iname '*bom.xml'").trim()
+                sbom_list.each { item ->
+                  sh "echo ${item}"
+                }
               }
               //sbom_list.each { item ->
               //    sh "echo ${item}"
