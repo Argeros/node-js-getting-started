@@ -24,7 +24,7 @@ pipeline {
               script {
                 sbom_list = sh(returnStdout: true, script: "find . -iname '*bom.xml'").trim().split("\n")
                 sbom_list.each { item ->
-                  application_name = item.split("/")[0-3]
+                  application_name = item.split("/")[0]
                   sh "echo ${item}"
                   sh "echo ${application_name}"
                 }
