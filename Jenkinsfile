@@ -19,13 +19,13 @@ pipeline {
             steps {
               catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                   nodejs(nodeJSInstallationName: "sbom") {
-                    sh "npx cyclonedx-bom -o npm-bom.xml"
+                    sh "npx cyclonedx-bom -o derps/npm-bom.xml"
                   }
 
                   script {
                     sbom_list = sh(returnStdout: true, script: "find . -iname '*bom.xml'").trim().split("\n")
                     sbom_list.each { item ->
-                      application_name = item.split("/")
+                      application_name = item.split("/")[1]
                       sh "echo ${item}"
                       sh "echo ${application_name}"
                     }
