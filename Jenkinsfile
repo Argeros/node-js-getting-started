@@ -19,8 +19,8 @@ pipeline {
             steps {
               nodejs(nodeJSInstallationName: "sbom") {
                 sh "npx cyclonedx-bom -o npm-bom.xml"
+                sbom_list = sh(returnStdout: true, script: 'find . -iname *bom.xml').trim()
               }
-              sbom_list = sh(returnStdout: true, script: 'find . -iname *bom.xml').trim()
               //sbom_list.each { item ->
               //    sh "echo ${item}"
               //}
