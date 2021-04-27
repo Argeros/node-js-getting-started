@@ -25,9 +25,15 @@ pipeline {
                   script {
                     sbom_list = sh(returnStdout: true, script: "find . -iname '*bom.xml'").trim().split("\n")
                     sbom_list.each { item ->
-                      application_name = item.split("/")[1] + "_" + item.split("/")[2].split("_")[0]
-                      echo "Uploading ${item} to project ${application_name}"
-                      dependencyTrackPublisher artifact: item, projectName: application_name, projectVersion: GIT_COMMIT.take(5), synchronous: false
+                      if (item.contains("npm")) {
+                        application_name = item.split("/")[1] + "_" + item.split("/")[2].split("-")[0]
+                        echo "Uploading ${item} to project ${application_name}"
+                        dependencyTrackPublisher artifact: item, projectName: application_name, projectVersion: GIT_COMMIT.take(5), synchronous: false
+                      } else {
+                        application_name = item.split("/")[1] + "_" + item.split("/")[2].split("_")[0]
+                        echo "Uploading ${item} to project ${application_name}"
+                        dependencyTrackPublisher artifact: item, projectName: application_name, projectVersion: GIT_COMMIT.take(5), synchronous: false
+                      }
                     }
                   }
               }
