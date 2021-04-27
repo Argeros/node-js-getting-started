@@ -28,7 +28,7 @@ pipeline {
                       application_name = item.split("/")[1]
                       sh "echo ${item}"
                       sh "echo ${application_name}"
-                      dependencyTrackPublisher artifact: {item}, projectName: "getting-started_" + ${application_name}, projectVersion: GIT_COMMIT.take(5), synchronous: false
+                      dependencyTrackPublisher artifact: item, projectName: "getting-started_" + application_name, projectVersion: GIT_COMMIT.take(5), synchronous: false
                     }
                   }
                   //sbom_list.each { item ->
