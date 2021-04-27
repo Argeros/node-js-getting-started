@@ -26,16 +26,11 @@ pipeline {
                     sbom_list = sh(returnStdout: true, script: "find . -iname '*bom.xml'").trim().split("\n")
                     sbom_list.each { item ->
                       application_name = item.split("/")[1]
-                      sh "echo ${item}"
+                      sh "Uploading ${item} to project ${application_name}"
                       sh "echo ${application_name}"
                       dependencyTrackPublisher artifact: item, projectName: "getting-started_" + application_name, projectVersion: GIT_COMMIT.take(5), synchronous: false
                     }
                   }
-                  //sbom_list.each { item ->
-                  //    sh "echo ${item}"
-                  //}
-
-                  dependencyTrackPublisher artifact: 'npm-bom.xml', projectName: 'getting-started', projectVersion: GIT_COMMIT.take(5), synchronous: false
               }
             }
         }
